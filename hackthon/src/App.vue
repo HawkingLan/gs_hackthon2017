@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="full-height">
         <header-nav></header-nav>
         <router-view></router-view>
     </div>
@@ -12,19 +12,15 @@
         name: 'app',
         components: {
             headerNav
+        },
+        mounted() {
+            this.$router.push('/industries');
         }
     };
 
 </script>
 
-<style>
-    #app {
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-align: center;
-        color: #2c3e50;
-        margin-top: 60px;
-    }
+<style rel="stylesheet/scss" lang="scss">
+    @import './App.scss';
 
 </style>
