@@ -1,6 +1,6 @@
 <template>
     <div class="m-chart-area full-height">
-        <heat-map :daterange="daterange"></heat-map>
+        <heat-map></heat-map>
         <div class="summary-chart">
             <pie-chart></pie-chart>
             <map-chart></map-chart>
@@ -13,12 +13,6 @@
     import mapChart from './mapChart';
 
     export default {
-        props: {
-            daterange: {
-                type: Array,
-                required: true
-            }
-        },
         components: {
             heatMap,
             pieChart,

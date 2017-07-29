@@ -1,20 +1,18 @@
 <template>
     <div class="m-filter-area">
-        <el-date-picker v-model="daterange" type="daterange" placeholder="请选择日期范围"
+        <el-date-picker v-model="range" type="daterange" placeholder="请选择日期范围"
                         :picker-options="pickerOptions">
         </el-date-picker>
     </div>
 </template>
 <script>
     import moment from 'moment';
+    import {
+        mapGetters,
+        mapActions
+    } from 'vuex';
 
     export default {
-        props: {
-            value: {
-                type: Array,
-                required: true
-            }
-        },
         data() {
             return {
                 pickerOptions: {
@@ -23,14 +21,18 @@
             };
         },
         computed: {
-            daterange: {
+            ...mapGetters(['daterange']),
+            range: {
                 get() {
-                    return this.value;
+                    return this.daterange;
                 },
                 set(val) {
-                    this.$emit('input', val);
+                    this.updateDateRange(val);
                 }
             }
+        },
+        methods: {
+            ...mapActions(['updateDateRange'])
         }
     };
 
