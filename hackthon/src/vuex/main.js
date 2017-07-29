@@ -19,10 +19,7 @@ let mutations = {
 
 let getters = {
     daterange: state => state.daterange,
-    getCurrentDrillData: state => {
-        let drill = state.dataDrill;
-        return drill[drill.length - 1] || null;
-    }
+    currentDrillData: state => state.dataDrill
 };
 
 let actions = {

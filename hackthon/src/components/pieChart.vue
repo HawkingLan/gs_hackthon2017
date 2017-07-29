@@ -15,13 +15,16 @@
             };
         },
         computed: {
-            ...mapGetters(['daterange']),
+            ...mapGetters(['daterange', 'currentDrillData']),
             option() {
-                return pieChart.getOption(this.daterange);
+                return pieChart.getOption(this.daterange, this.currentDrillData);
             }
         },
         watch: {
             daterange() {
+                this.chartObj.setOption(this.option);
+            },
+            currentDrillData() {
                 this.chartObj.setOption(this.option);
             }
         },

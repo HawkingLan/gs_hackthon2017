@@ -14,6 +14,7 @@ let generateData = () => {
 
 let getOption = () => {
     return {
+        color: ['#2f528f', '#3960a7', '#406dbb', '#6d89cb', '#9eadd8', '#c0c9e4', '#e5eaf9'],
         tooltip: {
             trigger: 'item'
         },
@@ -27,8 +28,11 @@ let getOption = () => {
             max: 2500,
             right: '10%',
             top: 'middle',
-            text: ['高', '低'], // 文本，默认为数值文本
-            calculable: true
+            text: ['高', '低'],
+            calculable: true,
+            inRange: {
+                color: ['#e5eaf9', '#0033cc']
+            }
         },
         series: [{
             name: '地域投放',

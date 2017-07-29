@@ -14,6 +14,7 @@ let generateDataSeries = (legend) => {
 
 let getOption = () => {
     let option = {
+        color: ['#2f528f', '#3960a7', '#406dbb', '#6d89cb', '#9eadd8', '#c0c9e4', '#e5eaf9'],
         tooltip: {
             trigger: 'item',
             formatter: '{a} <br/>{b} : {c} ({d}%)'

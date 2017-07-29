@@ -1,7 +1,10 @@
 import moment from 'moment';
 
-let generateAxisSeries = (industries, startDate, endDate) => {
-    let xAxis = [];
+let xAxis = [];
+let yAxis = [];
+
+let generateAxisSeries = (yAxisData, startDate, endDate) => {
+    xAxis = [];
     let start = moment(startDate);
     let end = moment(endDate);
 
@@ -10,25 +13,17 @@ let generateAxisSeries = (industries, startDate, endDate) => {
         start = start.add(1, 'day');
     }
 
-    let yAxis = [];
-    industries.forEach(item => {
+    yAxis = [];
+    yAxisData.forEach(item => {
         yAxis.push(item, '');
     });
-
-    return {
-        xAxis,
-        yAxis
-    };
 };
 
-let generateDataSeries = (industries, startDate, endDate) => {
-    let start = moment(startDate);
-    let end = moment(endDate);
-    let number = end.diff(start, 'day');
+let generateDataSeries = () => {
     let data = [];
 
-    for (let i = 0; i < industries * 2 - 1; i++) {
-        for (let j = 0; j < number; j++) {
+    for (let i = 0; i < yAxis.length - 1; i++) {
+        for (let j = 0; j < xAxis.length; j++) {
             let val = i % 2 ? '-' : Math.round(Math.random() * 10000);
             data.push([j, i, val]);
         }
@@ -37,9 +32,8 @@ let generateDataSeries = (industries, startDate, endDate) => {
     return data;
 };
 
-let getOption = (industries, startDate, endDate) => {
-    let axisData = generateAxisSeries(industries, startDate, endDate);
-    let datas = generateDataSeries(industries.length, startDate, endDate);
+let getOption = (lastDrill, startDate, endDate) => {
+    generateAxisSeries(lastDrill.childCategories, startDate, endDate);
     let option = {
         tooltip: {
             show: true,
@@ -47,8 +41,8 @@ let getOption = (industries, startDate, endDate) => {
         },
         grid: {
             top: '10%',
-            left: '12%',
-            right: '5%'
+            left: '3%',
+            containLabel: true
         },
         xAxis: {
             type: 'category',
@@ -59,7 +53,7 @@ let getOption = (industries, startDate, endDate) => {
             axisTick: {
                 show: false
             },
-            data: axisData.xAxis
+            data: xAxis
         },
         yAxis: {
             type: 'category',
@@ -75,20 +69,24 @@ let getOption = (industries, startDate, endDate) => {
             axisTick: {
                 show: false
             },
-            data: axisData.yAxis
+            data: yAxis
         },
         visualMap: {
             min: 0,
             max: 10000,
             calculable: true,
             orient: 'vertical',
-            left: '2%',
-            top: 'middle'
+            right: '2%',
+            top: 'middle',
+            text: ['高', '低'],
+            inRange: {
+                color: ['#e5eaf9', '#0033cc']
+            }
         },
         series: [{
-            name: '广告投放',
+            name: lastDrill.key,
             type: 'heatmap',
-            data: datas,
+            data: generateDataSeries(startDate, endDate),
             label: {
                 normal: {
                     show: false
@@ -106,8 +104,19 @@ let getOption = (industries, startDate, endDate) => {
     return option;
 };
 
+let getOneData = (param) => {
+    let coord = param.value;
+
+    return {
+        key: yAxis[coord[1]],
+        date: xAxis[coord[0]],
+        value: coord[2]
+    };
+};
+
 export {
     generateAxisSeries as getAxisData,
     generateDataSeries as getData,
-    getOption
+    getOption,
+    getOneData
 };

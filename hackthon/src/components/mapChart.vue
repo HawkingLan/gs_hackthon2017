@@ -16,13 +16,16 @@
             };
         },
         computed: {
-            ...mapGetters(['daterange']),
+            ...mapGetters(['daterange', 'currentDrillData']),
             option() {
-                return mapChart.getOption(this.daterange);
+                return mapChart.getOption(this.daterange, this.currentDrillData);
             }
         },
         watch: {
             daterange() {
+                this.chartObj.setOption(this.option);
+            },
+            currentDrillData() {
                 this.chartObj.setOption(this.option);
             }
         },
